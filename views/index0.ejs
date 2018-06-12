@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8">
+    <title><%=content%></title>
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+    <link rel="icon" type="image/png" href="favicon.ico" sizes="16x16">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400italic,500,700">
+    <link rel="stylesheet" type="text/css" href="../css/vendor.min.css">
+    <link rel="stylesheet" type="text/css" href="../css/elephant.css">
+    <link rel="stylesheet" type="text/css" href="../css/application.min.css">
+    <script type="text/javascript" src="../js/vendor.min.js"></script>
+
+  </head>
+  <body class="layout layout-header-fixed">
+    <div class="layout-header">
+      <div class="navbar navbar-default">
+        <div class="navbar-header">
+          <button class="navbar-toggler visible-xs-block collapsed" type="button" data-toggle="collapse" data-target="#sidenav">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="bars">
+              <span class="bar-line bar-line-1 out"></span>
+              <span class="bar-line bar-line-2 out"></span>
+              <span class="bar-line bar-line-3 out"></span>
+            </span>
+            <span class="bars bars-x">
+              <span class="bar-line bar-line-4"></span>
+              <span class="bar-line bar-line-5"></span>
+            </span>
+          </button>
+        </div>
+        <div class="navbar-toggleable">
+          <nav id="navbar" class="navbar-collapse collapse">
+            <button class="sidenav-toggler hidden-xs" title="Collapse sidenav ( [ )" aria-expanded="true" type="button">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="bars">
+                <span class="bar-line bar-line-1 out"></span>
+                <span class="bar-line bar-line-2 out"></span>
+                <span class="bar-line bar-line-3 out"></span>
+                <span class="bar-line bar-line-4 in"></span>
+                <span class="bar-line bar-line-5 in"></span>
+                <span class="bar-line bar-line-6 in"></span>
+              </span>
+            </button>
+          </nav>
+        </div>
+      </div>
+    </div>
+    <div class="layout-main">
+      <div class="layout-sidebar">
+        <div class="layout-sidebar-backdrop"></div>
+        <div class="layout-sidebar-body">
+          <div class="custom-scrollbar">
+            <nav id="sidenav" class="sidenav-collapse collapse">
+              <ul class="sidenav">
+                <li class="sidenav-search hidden-md hidden-lg">
+                  <form class="sidenav-form" action="/">
+                    <div class="form-group form-group-sm">
+                      <div class="input-with-icon">
+                        <input class="form-control" type="text" placeholder="Search…">
+                        <span class="icon icon-search input-icon"></span>
+                      </div>
+                    </div>
+                  </form>
+                </li>
+                <li class="sidenav-heading">Навигация</li>
+                <li class="sidenav-item has-subnav">
+                  <a href="/news" aria-haspopup="true">
+                    <span class="sidenav-icon icon icon-bullhorn"></span>
+                    <span class="sidenav-label">Новости</span>
+                  </a>
+                  <ul class="sidenav-subnav collapse">
+                    <li class="sidenav-subheading">Новости</li>
+                    <li><a href="/news">Новости</a></li>
+                    <li><a href="/add_new_news">Добавить новость</a></li>
+                  </ul>
+                </li>
+                <!-- <li class="sidenav-item has-subnav">
+                  <a href="/login" aria-haspopup="true">
+                    <span class="sidenav-icon icon icon-home"></span>
+                    <span class="sidenav-label">Логин</span>
+                  </a>
+                  <ul class="sidenav-subnav collapse">
+                    <li class="sidenav-subheading">Логин</li>
+                    <li><a href="/login">Логин</a></li>
+                    <li><a href="/password">Изменить пароль</a></li>
+                    <li><a href="/signup">Регистрация</a></li>
+                  </ul>
+                </li> -->
+                <li class="sidenav-item">
+                  <a href="/profile">
+                    <!-- <span class="badge badge-success">26</span> -->
+                    <span class="sidenav-icon icon icon-user"></span>
+                    <span class="sidenav-label">Мой профиль</span>
+                  </a>
+                </li>
+                <li class="sidenav-item">
+                  <a href="/users">
+                    <span class="badge badge-primary">new</span>
+                    <span class="sidenav-icon icon icon-user"></span>
+                    <span class="sidenav-label">Пользователи</span>
+                  </a>
+                </li>
+                <li class="sidenav-item">
+                  <a href="/tree">
+                    <span class="sidenav-icon icon icon-map-marker"></span>
+                    <span class="sidenav-label">Выбор положения</span>
+                  </a>
+                </li>
+                <li class="sidenav-item">
+                  <a id="logout">
+                    <span class="sidenav-icon icon icon-remove"></span>
+                    <span class="sidenav-label">Выход</span>
+                  </a>
+                </li>
+              </ul>
+            </nav>
+          </div>
+        </div>
+      </div>
+      <div class="layout-content">
+        <%-partial(content)%>
+      </div>
+    </div>
+    <script type="text/javascript" src="../js/elephant.js"></script>
+    <script type="text/javascript" src="../js/application.min.js"></script>
+  </body>
+</html>

@@ -1,0 +1,57 @@
+<link rel="stylesheet" type="text/css" href="../css/profile.css">
+<div class="login">
+  <div class="login-body">
+    <h3 class="login-heading">Учётная запись</h3>
+    <hr>
+    <div class="login-form">
+      <div class="form-group">
+        <ul class="list-inline">
+          <li>
+            <small>Персональная информация</small>
+          </li>
+        </ul>
+      </div>
+      <div class="form-group">
+        <ul class="list-inline">
+          <label for="name">Имя</label>
+          <input id="name" class="form-control" type="text">
+          <label for="surname">Фамилия</label>
+          <input id="surname" class="form-control" type="text">
+          <label for="second_name">Отчество</label>
+          <input id="second_name" class="form-control" type="text">
+        </ul>
+      </div>
+      <div class="form-group">
+        <ul class="list-inline">
+          <label for="b_date">Дата рождения</label>
+          <input id="b_date" class="form-control" type="date">
+        </ul>
+      </div>
+      <hr>
+      <div class="form-group">
+        <ul class="list-inline">
+          <li>
+            <small>Контактные данные</small>
+          </li>
+        </ul>
+      </div>
+      <div class="form-group">
+        <ul class="list-inline">
+          <label for="phone">Телефон</label>
+          <input id="phone" class="form-control" type="number" value="<%=phone%>">
+        </ul>
+      </div>
+      <div class="form-group">
+        <ul class="list-inline">
+          <label for="email">email</label>
+          <input id="email" class="form-control" type="email">
+        </ul>
+      </div>
+      <hr>
+      <div class="form-group">
+        <div class="btn btn-success btn-block" id="save_edit">Сохранить изменения</div>
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript" src="../js/edit_profile.js"></script>

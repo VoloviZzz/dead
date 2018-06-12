@@ -1,0 +1,36 @@
+{
+  "name": "appserver",
+  "version": "1.0.0",
+  "description": "appserver",
+  "main": "app.js",
+  "dependencies": {
+    "@google-cloud/vision": "^0.19.0",
+    "body-parser": "^1.18.2",
+    "bower": "^1.8.4",
+    "connect": "^3.6.6",
+    "cookie-sessions": "0.0.2",
+    "ejs": "^2.5.8",
+    "ejs-locals": "^1.0.2",
+    "express": "^4.16.3",
+    "express-mysql-session": "^1.3.0",
+    "express-session": "^1.15.6",
+    "express-sessions": "^1.0.6",
+    "google-cloud": "^0.57.0",
+    "multiparty": "^4.1.3",
+    "mysql": "^2.15.0",
+    "sms_ru": "0.0.1"
+  },
+  "devDependencies": {
+    "gm": "^1.23.1",
+    "imagemagick": "^0.1.3"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@192.168.50.22:/rep/appserver.git"
+  },
+  "author": "",
+  "license": "ISC"
+}

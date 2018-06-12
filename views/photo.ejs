@@ -1,0 +1,72 @@
+<link rel="stylesheet" type="text/css" href="../css/profile.css">
+
+<div class="login">
+  <div class="loader">
+      <img src="../css/loader.gif" alt="">
+  </div>
+  <div class="login-body-news text-center">
+    <h3 class="login-heading">Перевести Фото</h3>
+    <div class="btn-group pull-center center text-center" style="text-align:center" data-toggle="buttons">
+      <label class="btn btn-primary active">
+        <input type="radio" name="options" id="option1" autocomplete="off" checked> RU
+      </label>
+      <label class="btn btn-primary">
+        <input type="radio" name="options" id="option2" autocomplete="off"> EN
+      </label>
+      <label class="btn btn-primary">
+        <input type="radio" name="options" id="option3" autocomplete="off"> Выбрать
+      </label>
+    </div>
+    <hr>
+    <div class="login-form">
+      <div class="form-group" id="photo"></div>
+
+      <div class="form-group">
+        <ul class="list-inline">
+          <label for="photo">Фотография</label>
+          <div id="uploadFiles_label">
+            <!-- <progress id="progress" value="0" max="100">0%</progress> -->
+            <img id="first_photo" src="/uploads/take_a_pic.png">
+            <input id="uploadFiles" class="form-control" type="file" style="display:none">
+            <div class="select_btn"><span class="sidenav-icon icon icon-edit"></span></div>
+            <div class="chenge_photo"><span class="sidenav-icon icon icon-camera"></span></div>
+            <div id="detect" ><span class="sidenav-icon icon icon-android"></span></div>
+          </div>
+          <!-- <button class="btn btn-info btn-block"  id="detect">Определить автоматически</button> -->
+
+          <div style="display:none;" id="selected">
+
+            <!-- <button class="btn btn-info btn-block" id="release">Сброс</button> -->
+            <button style="display:none;" class="btn btn-info btn-block"  id="crop">Добавить фото</button>
+            <!-- <div class="btn btn-primary btn-block" id="uploadFiles_BTN" onclick="$('#uploadFiles').click()">Заменить фото</div> -->
+
+            <!-- <div class="inline-labels"> -->
+            <div style="display:none;" class="inline-labels">
+                <label>X1 <input type="text" size="4" id="x1" name="x1" /></label>
+                <label>Y1 <input type="text" size="4" id="y1" name="y1" /></label>
+                <label>X2 <input type="text" size="4" id="x2" name="x2" /></label>
+                <label>Y2 <input type="text" size="4" id="y2" name="y2" /></label>
+                <label>W <input type="text" size="4" id="w" name="w" /></label>
+                <label>H <input type="text" size="4" id="h" name="h" /></label>
+            </div>
+
+            <div id="cropresult">
+
+            </div>
+            <div class="">
+
+            </div>
+
+          </div>
+        </ul>
+      </div>
+
+      <div class="form-group" id="text"></div>
+      <div class="form-group">
+        <a style="display:none" class="btn btn-success btn-block" id="save_word">Скачать файл Word</a>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- <script type="text/javascript" src="../js/uploader0.js"></script> -->
+<script type="text/javascript" src="../js/photo.js"></script>
