@@ -16,10 +16,10 @@ app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
 
 var api                        = require('./api');
-const mysql                    = require("mysql");
-const dbSettings               = require("./db_settings.js");
-const config                   = require("./config.js");
-const connection               = mysql.createConnection(dbSettings);
+var mysql                      = require("mysql");
+var dbSettings                 = require("./db_settings.js");
+var config                     = require("./config.js");
+var connection                 = mysql.createConnection(dbSettings);
 
 
 
@@ -34,6 +34,114 @@ app.use(session({
     store: new SessionStore(dbSettings)
 }));
 
+app.get('/akt_contract', function (req, res, next) {
+  var degree;
+  var cathedra;
+  var emp;
+  var akts;
+  var contracts;
+  var sql = "SELECT * FROM akts WHERE contract = "+req.query.id;
+  connection.query(sql, function(err, rows, fields){
+      if(err) return console.log(err);
+      akts = rows;
+      var sql = "SELECT * FROM contract WHERE id = "+req.query.id;
+      connection.query(sql, function(err, rows, fields){
+          if(err) return console.log(err);
+          contracts = rows[0];
+          if (rows.length != 0) {
+            var sql = "SELECT * FROM emp WHERE id = "+contracts.emp;
+            connection.query(sql, function(err, rows, fields){
+                if(err) return console.log(err);
+                emp = rows[0];
+                console.log(emp);
+                if (rows.length != 0) {
+                  var sql = "SELECT * FROM cathedra WHERE id = "+emp.cathedra;
+                  connection.query(sql, function(err, rows, fields){
+                      if(err) return console.log(err);
+                      cathedra = rows[0];
+                      console.log(emp);
+                      if (rows.length != 0) {
+                        var sql = "SELECT * FROM degree WHERE id = "+emp.id_degree;
+                        connection.query(sql, function(err, rows, fields){
+                            if(err) return console.log(err);
+                            degree = rows[0];
+                            console.log(emp);
+                            if (rows.length != 0) {
+                                res.render('contract_print',{
+                                  status : "ok",
+                                  akts: akts,
+                                  contracts: contracts,
+                                  emp: emp,
+                                  cathedra: cathedra,
+                                  degree: degree
+                                });
+                            }
+                        });
+                      }
+                  });
+                }
+            });
+          }
+      });
+  });
+
+
+});
+
+app.get('/akt_print', function (req, res, next) {
+  var degree;
+  var cathedra;
+  var emp;
+  var akts;
+  var contracts;
+  var sql = "SELECT * FROM akts LEFT JOIN groups ON akts.group = groups.id WHERE contract = "+req.query.id;
+  connection.query(sql, function(err, rows, fields){
+      if(err) return console.log(err);
+      akts = rows;
+      var sql = "SELECT * FROM contract WHERE id = "+req.query.id;
+      connection.query(sql, function(err, rows, fields){
+          if(err) return console.log(err);
+          contracts = rows[0];
+          if (rows.length != 0) {
+            var sql = "SELECT * FROM emp WHERE id = "+contracts.emp;
+            connection.query(sql, function(err, rows, fields){
+                if(err) return console.log(err);
+                emp = rows[0];
+                console.log(emp);
+                if (rows.length != 0) {
+                  var sql = "SELECT * FROM cathedra WHERE id = "+emp.cathedra;
+                  connection.query(sql, function(err, rows, fields){
+                      if(err) return console.log(err);
+                      cathedra = rows[0];
+                      console.log(emp);
+                      if (rows.length != 0) {
+                        var sql = "SELECT * FROM degree WHERE id = "+emp.id_degree;
+                        connection.query(sql, function(err, rows, fields){
+                            if(err) return console.log(err);
+                            degree = rows[0];
+                            console.log(emp);
+                            if (rows.length != 0) {
+                                res.render('akt_print',{
+                                  status : "ok",
+                                  akts: akts,
+                                  contracts: contracts,
+                                  emp: emp,
+                                  cathedra: cathedra,
+                                  degree: degree
+                                });
+                            }
+                        });
+                      }
+                  });
+                }
+            });
+          }
+      });
+  });
+
+
+});
+
 
 
 app.get('/', function (req, res, next) {
@@ -41,7 +149,9 @@ app.get('/', function (req, res, next) {
   if (req.session.auth == true) {
     res.render('index',{
       type: 1,
-      content:'profile'
+      content:'profile',
+      phone: req.session.phone,
+      emp: req.session.emp
     });
   }else {
     res.render('logged',{
@@ -101,7 +211,10 @@ app.get('/:params', function (req, res, next) {
   }
 });
 
-app.post('/api', jsonParser, function (req, res) {
+
+
+app.post('/api', jsonParser, function (req, res, next) {
+
     api.ctrl(req.body.api, function (ansver) {
       if (ansver.status == 'login') {
         req.session.auth = true;
@@ -117,6 +230,8 @@ app.post('/api', jsonParser, function (req, res) {
       }
     });
 });
+
+
 
 app.post('/', function(req, res, next) {
   console.log(req);

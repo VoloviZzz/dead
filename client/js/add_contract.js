@@ -48,9 +48,15 @@ $(document).ready(function () {
 
   $('#add_contract').click(function () {
     var words = [];
+    var sum = 0;
     $.each($('.words'), function () {
       words.push($(this).val());
+      sum += Number($(this).val());
     });
+    if (sum > 300) {
+      alert('Указанно больше 300 часов.');
+      return 0;
+    }
     var api = {
       "api": {
       	"token":"1234",

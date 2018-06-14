@@ -8,9 +8,96 @@
           <li class="contact-list-divider">
             <span class="icon icon-star-o"></span>
           </li>
+          <li class="contact-list-item" style="display:none">
+            <a class="contact-list-link" id="edit_item" href="#edit_block" data-toggle="tab" aria-expanded="false">
+              <div class="contact-list-details">
+                <h5 class="contact-list-name">
+                  <span class="truncate">"Редактировать"</span>
+                </h5>
+              </div>
+            </a>
+          </li>
         </ul>
       </div><div class="custom-scrollbar-gripper" style="background: rgb(0, 0, 0); width: 6px; position: absolute; top: 0px; opacity: 0.4; display: none; border-radius: 7px; z-index: 99; right: 5px; height: 295.289px;"></div><div class="custom-scrollbar-track" style="width: 6px; height: 100%; position: absolute; top: 0px; display: none; border-radius: 7px; background: rgb(51, 51, 51); opacity: 0.2; z-index: 90; right: 5px;"></div></div>
     </div>
   </div>
+
+  <!-- <a href="#edit_block" data-toggle="tab" aria-expanded="true">Редактировать акт</a> -->
+
+  <div id="edit_block" class="contact-content">
+    <div class="contact-content-body">
+      <div class="contact-info">
+        <h2 class="contact-name">Редактировать акт</h2>
+      </div>
+      <div class="contact-form">
+        <form class="form-horizontal" action="/">
+          <div class="form-groups">
+
+            <div class="form-group">
+              <label class="col-md-3 control-label">Дата: </label>
+              <div class="col-md-9 col-lg-6">
+                <input id="date" class="form-control" type="date">
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-md-3 control-label">Учёная Степень: </label>
+              <div class="col-md-9 col-lg-6">
+                <select class="form-control" id="degree"></select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-md-3 control-label">Группа: </label>
+              <div class="col-md-9 col-lg-6">
+                <select class="form-control" id="groups"></select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-md-3 control-label">Предмет: </label>
+              <div class="col-md-9 col-lg-6">
+                <select class="form-control" id="items"></select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-md-3 control-label">Часы: </label>
+              <div class="col-md-9 col-lg-6">
+                <select class="form-control" id="time">
+                  <!-- <option value="0"> 8:00 - 9:30 </option>
+                  <option value="1"> 9:40 - 11:10 </option>
+                  <option value="2"> 11:20 - 12:50 </option>
+                  <option value="3"> 13:00 - 14:30 </option>
+                  <option value="4"> 14:40 - 16:10 </option> -->
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-md-3 control-label">Вид работы: </label>
+              <div class="col-md-9 col-lg-6">
+                <select class="form-control" id="type_work">
+                  <!-- <option value="0">Лекция</option>
+                  <option value="1">Практическое занятие</option> -->
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-md-3 control-label">Трудовой договор: </label>
+              <div class="col-md-9 col-lg-6">
+                <select class="form-control" id="contracts"></select>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <div class="col-md-6 col-md-offset-3">
+                <button class="btn btn-primary" id="edit_akts" type="button">Редактировать</button>
+              </div>
+            </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+
 </div>
+
+
+
 <script type="text/javascript" src="js/print_n_edit.js"></script>

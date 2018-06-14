@@ -4,6 +4,7 @@ function collapse(btn) {
 }
 
 $(document).ready(function () {
+
   var api = {
     "api": {
     	"token":"1234",
@@ -19,7 +20,7 @@ $(document).ready(function () {
     contentType: "application/json",
     success: function(data){
           $.each(data.ansver, function () {
-            console.log(this);
+            // console.log(this);
             var user = this;
             var list = '<li class="contact-list-item">';
             list +=  '<a class="contact-list-link" href="#'+user.id+'" data-toggle="tab" aria-expanded="true">';
@@ -48,7 +49,7 @@ $(document).ready(function () {
               dataType: "json",
               contentType: "application/json",
               success: function(data){
-                    console.log(data.ansver);
+                    // console.log(data.ansver);
                     var tmp = data.ansver;
 
                     var str = '<div id="'+user.id+'" class="contact-content">';
@@ -81,7 +82,7 @@ $(document).ready(function () {
                         str += '  <tbody>';
                         var qweqwe = this;
                         $.each(tmp.rows2, function (val2) {
-                          console.log(this.contract+' - '+qweqwe.id);
+                          // console.log(this.contract+' - '+qweqwe.id);
                           if (this.contract == qweqwe.id) {
                             var type = this.type == 0 ? 'Лекция' : 'Практическое занятие';
                             var time;
@@ -119,8 +120,8 @@ $(document).ready(function () {
                             str += '    </button>';
                             str += '    <ul class="dropdown-menu dropdown-menu-right">';
                             // str += '      <li><a onclick="print_akt('+this.id+')">Печать</a></li>';
-                            str += '      <li><a onclick="print_akt('+this.id+')">Редактировать акт</a></li>';
-                            str += '      <li><a onclick="print_akt('+this.id+')">Удалить акт</a></li>';
+                            str += '      <li><a onclick="$(\'#edit_item\').click(); update_edit_block('+this.id+');" >Редактировать акт</a></li>';
+                            str += '      <li><a onclick="delete_akt('+this.id+', this)">Удалить акт</a></li>';
                             // str += '      <li><a href="/uploads/f'+user.id+''+qweqwe.id+''+this.id+'.docx" download >Скачать .DOCX</a></li>';
                             str += '    </ul>';
                             str += '  </div>';
@@ -130,10 +131,11 @@ $(document).ready(function () {
                         });
                         str += '          </tbody>';
                         str += '        </table>';
-                        str += '<div style="display:none" onclick="print_akt('+this.id+')" class="btn btn-info print">Печать трудового догавора</div>';
-                        str += '<div style="display:none" onclick="remove_contract('+this.id+')" class="btn btn-danger print">Удалить трудовой договор</div>';
-                        str += '<div style="display:none" onclick="print_contract('+this.id+')" class="btn btn-info print">Печать списка акта работ</div>';
-                        str += '<a style="display:none; padding: 7px 15px;" href="/upload/contract'+this.id+'.docx" download class="btn btn-danger print">Скачать .DOCX</a>';
+                        str += '<div style="display:none" onclick="print_contract('+this.id+')" class="btn btn-info print">Печать трудового догавора</div>';
+                        str += '<div style="display:none" onclick="remove_contract('+this.id+', this)" class="btn btn-danger print">Удалить трудовой договор</div>';
+                        str += '<div style="display:none" onclick="print_akt('+this.id+')" class="btn btn-info print">Печать списка акта работ</div>';
+                        str += '<div style="display:none" onclick="save_akt('+this.id+', this)" class="btn btn-danger print">Создать .DOCX</a>';
+                        // str += '<a style="display:none; padding: 7px 15px;" href="/upload/contract'+this.id+'.docx" download class="btn btn-danger print">Скачать .DOCX</a>';
                         str += '      </li>';
                         str += '<br>';
                       }
@@ -149,17 +151,73 @@ $(document).ready(function () {
     });
 });
 
+function remove_contract(id, btn) {
+  if (confirm('Удалить?')) {
+    console.log('del');
+    var api = {
+      "api": {
+        "token":"1234",
+        "ctrl":"del_c",
+        "route":"akt",
+        "akt": id
+      }
+    };
+    console.log(api);
+    $.ajax({
+      type: "POST",
+      url: "/api",
+      data: JSON.stringify(api),
+      dataType: "json",
+      contentType: "application/json",
+      success: function(data){
+            $(btn).parent().hide(200);
+          }
+    });
+  }else {
+    console.log('BACK');
+  }
+}
 
-function print_akt(id){
+
+function delete_akt(id, btn) {
+  if (confirm('Удалить?')) {
+    console.log('del');
+    var api = {
+      "api": {
+        "token":"1234",
+        "ctrl":"del",
+        "route":"akt",
+        "akt": id
+      }
+    };
+    console.log(api);
+    $.ajax({
+      type: "POST",
+      url: "/api",
+      data: JSON.stringify(api),
+      dataType: "json",
+      contentType: "application/json",
+      success: function(data){
+            $(btn).parent().parent().parent().parent().parent().hide(200);
+          }
+    });
+  }else {
+    console.log('BACK');
+  }
+}
+
+
+function update_edit_block(akt_id) {
+
   var api = {
     "api": {
       "token":"1234",
       "ctrl":"get",
-      "route":"akt",
-      "id":id
+      "route":"all_selects_with_akt",
+      "emp": $('#emp_id').text(),
+      "akt": akt_id
     }
   };
-  console.log(api);
   $.ajax({
     type: "POST",
     url: "/api",
@@ -167,18 +225,188 @@ function print_akt(id){
     dataType: "json",
     contentType: "application/json",
     success: function(data){
+      $('#degree').empty();
+      $('#groups').empty();
+      $('#items').empty();
+      $('#contracts').empty();
+      $('#time').empty();
+      $('#type_work').empty();
+      $('#date').val('');
           console.log(data);
-          var printwin = open('', 'printwin', 'width=' + screen.Width + ',height=' + screen.Height);
-            printwin.document.open();
-            printwin.document.writeln('<html><head><title></title></head><body onload=print();close()>');
-            printwin.document.writeln(data);
-            printwin.document.writeln('</body></html>');
-            printwin.document.close();
+          var ansver = data.ansver;
+          $('#date').val(ansver.akts[0].date.split('T1')[0]);
+          $.each(ansver.degree, function () {
+            var str = '<option ';
+            if (ansver.akts[0].degree == this.id) {
+              str += ' selected ';
+            }
+            str += ' value="'+this.id+'">'+this.name+'</option>';
+            $('#degree').append(str);
+          });
+          $.each(ansver.groups, function () {
+            var str = '<option ';
+            if (ansver.akts[0].group == this.id) {
+              str += ' selected ';
+            }
+            str += ' value="'+this.id+'">'+this.name_group+'</option>';
+            $('#groups').append(str);
+          });
+          $.each(ansver.items, function () {
+            var str = '<option ';
+            if (ansver.akts[0].item == this.id) {
+              str += ' selected ';
+            }
+            str += ' value="'+this.id+'">'+this.name_item+'</option>';
+            $('#items').append(str);
+          });
+          $.each(ansver.contracts, function () {
+            var str = '<option ';
+            if (ansver.akts[0].contract == this.id) {
+              str += ' selected ';
+            }
+            str += ' value="'+this.id+'">'+this.id+' - '+this.num+'</option>';
+            $('#contracts').append(str);
+          });
+
+          var time = [
+            "8:00 - 9:30",
+            "9:40 - 11:10",
+            "11:20 - 12:50",
+            "13:00 - 14:30",
+            "14:40 - 16:10"
+          ];
+          var type = [
+            "Лекция",
+            "Практическое занятие"
+          ];
+
+          $.each(time, function (index, val) {
+            var str = '<option ';
+            if (ansver.akts[0].time == index) {
+              str += ' selected ';
+            }
+            str += ' value="'+index+'">'+val+'</option>';
+            $('#time').append(str);
+          });
+
+          $.each(type, function (index, val) {
+            var str = '<option ';
+            if (ansver.akts[0].type == index) {
+              str += ' selected ';
+            }
+            str += ' value="'+index+'">'+val+'</option>';
+            $('#type_work').append(str);
+          });
+
+          $('#edit_akts').click(function () {
+            console.log(akt_id);
+            var api = {
+              "api": {
+              	"token":"1234",
+                "ctrl":"edit",
+                "route":"akt",
+                "akt": akt_id,
+                "date": $('#date').val(),
+                "degree": $('#degree option:selected').val(),
+                "groups": $('#groups option:selected').val(),
+                "items": $('#items option:selected').val(),
+                "contracts": $('#contracts option:selected').val(),
+                "time": $('#time option:selected').val(),
+                "type_work": $('#type_work option:selected').val(),
+                "emp": $('#emp_id').text()
+              }
+            };
+            console.log(api);
+            $.ajax({
+              type: "POST",
+              url: "/api",
+              data: JSON.stringify(api),
+              dataType: "json",
+              contentType: "application/json",
+              success: function(data){
+                    console.log(data);
+                    alert('Акт отредактирован');
+                    location.reload();
+                  }
+              });
+          });
         }
     });
+}
 
 
+function save_akt(id, btn){
+  console.log('creating...');
+  $.ajax({
+    type: "GET",
+    url: "/akt_print",
+    data: {id: id},
+    success: function(data){
+          console.log(data);
+          var api = {
+            "api": {
+              "token":"1234",
+              "ctrl":"file",
+              "route":"photo",
+              "text": data
+            }
+          };
+          console.log(api);
+          $.ajax({
+            type: "POST",
+            url: "/api",
+            data: JSON.stringify(api),
+            dataType: "json",
+            contentType: "application/json",
+            success: function(data){
+                  console.log(data);
+                  $(btn).after('<a padding: 7px 15px;" href="/uploads/f'+data.ansver+'.docx" download class="btn btn-success print">Скачать .DOCX</a>');
+                }
+            });
+        }
+    });
+}
 
+
+function print_contract(id){
+  $.ajax({
+    type: "GET",
+    url: "/akt_contract",
+    data: {id: id},
+    success: function(data){
+          console.log(data);
+          var printwin = open('', '', 'width=' + screen.Width + ',height=' + screen.Height);
+          console.log(printwin);
+          setTimeout(function () {
+            printwin.document.open();
+            printwin.document.writeln(data);
+            printwin.document.close();
+          }, 1000);
+
+        }
+    });
+}
+
+
+function print_akt(id){
+  $.ajax({
+    type: "GET",
+    url: "/akt_print",
+    data: {id: id},
+    success: function(data){
+          console.log(data);
+          var printwin = open('', '', 'width=' + screen.Width + ',height=' + screen.Height);
+          console.log(printwin);
+          setTimeout(function () {
+            printwin.document.open();
+            // printwin.document.writeln('<html><head><title></title></head><body onload=print();close()>');
+            printwin.document.writeln(data);
+            // printwin.document.writeln('</body></html>');
+            printwin.document.close();
+          }, 1000);
+
+        }
+    });
 }
 
 

@@ -20,7 +20,9 @@ $(document).ready(function () {
       dataType: "json",
       contentType: "application/json",
       success: function(data){
+        setTimeout(function () {
           document.location = "/profile";
+        }, 1000);
           }
       });
 
