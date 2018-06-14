@@ -20,7 +20,11 @@ $(document).ready(function () {
       dataType: "json",
       contentType: "application/json",
       success: function(data){
+<<<<<<< HEAD
           setTimeout(function () {
+=======
+        setTimeout(function () {
+>>>>>>> e735c7e068b1a1d08411820d1d0978e2b2d03e07
           document.location = "/profile";
         }, 1000);
           }

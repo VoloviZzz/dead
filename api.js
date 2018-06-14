@@ -373,6 +373,19 @@ exports.ctrl = function (mess, func) {
                 func(ansver);
             }
         });
+      }else if (mess.ctrl == 'print_akt') {
+        // var sql = "UPDATE users SET active = 0 WHERE phone = "+mess.phone;
+        // connection.query(sql, function(err, rows, fields){
+            // if(err) return console.log(err);
+            var data = fs.readFileSync('client/uploads/akt_print.ejs', 'utf8');
+            // fs.readFile('client/uploads/akt_print.ejs', function (data) {
+                var ansver = {
+                  status : "ok",
+                  ansver : data
+                }
+                func(ansver);
+              // });
+        // });
       }else if (mess.ctrl == 'ban_login') {
         var sql = "UPDATE users SET active = 0 WHERE phone = "+mess.phone;
         connection.query(sql, function(err, rows, fields){
@@ -478,6 +491,51 @@ exports.ctrl = function (mess, func) {
         });
 
       }
+    }else if(mess.route == 'all_selects_with_akt'){
+      if (mess.ctrl == 'get') {
+        var akt;
+        var degree;
+        var cathedra;
+        var groups;
+        var items;
+        var contracts;
+        var sql = "SELECT * FROM degree";
+        connection.query(sql, function(err, rows, fields){
+            if(err) return console.log(err);
+            degree = rows;
+            var sql = "SELECT * FROM cathedra";
+            connection.query(sql, function(err, rows, fields){
+                if(err) return console.log(err);
+                cathedra = rows;
+                var sql = "SELECT * FROM groups";
+                connection.query(sql, function(err, rows, fields){
+                    if(err) return console.log(err);
+                    groups = rows;
+                    var sql = "SELECT * FROM items";
+                    connection.query(sql, function(err, rows, fields){
+                        if(err) return console.log(err);
+                        items = rows;
+                        var sql = "SELECT * FROM contract WHERE emp = "+mess.emp;
+                        connection.query(sql, function(err, rows, fields){
+                            if(err) return console.log(err);
+                            contracts = rows;
+                            var sql = "SELECT * FROM akts WHERE id = "+mess.akt;
+                            connection.query(sql, function(err, rows, fields){
+                                if(err) return console.log(err);
+                                akts = rows;
+                                var ansver = {
+                                  status : "ok",
+                                  ansver : {degree: degree, cathedra: cathedra, groups: groups, items: items, contracts: contracts, akts: akts}
+                                };
+                                func(ansver);
+                            });
+                        });
+                    });
+                });
+            });
+        });
+
+      }
     }else if(mess.route == 'contract'){
       if (mess.ctrl == 'add') {
         var sql = "SELECT * FROM emp WHERE name = '"+mess.name+"' AND surname = '"+mess.surname+"' AND middle_name = '"+mess.middle_name+"' LIMIT 1";
@@ -505,7 +563,7 @@ exports.ctrl = function (mess, func) {
         connection.query(sql, function(err, rows, fields){
             if(err) return console.log(err);
             console.log(rows);
-            var sql = "SELECT * FROM akts LEFT JOIN degree ON akts.degree = degree.id LEFT JOIN groups ON akts.item = groups.id LEFT JOIN items ON akts.item = items.id";
+            var sql = "SELECT akts.*, degree.name, items.name_item, groups.name_group FROM akts LEFT JOIN degree ON akts.degree = degree.id LEFT JOIN groups ON akts.item = groups.id LEFT JOIN items ON akts.item = items.id";
             connection.query(sql, function(err, rows2, fields){
                 if(err) return console.log(err);
                 var ansver = {
@@ -515,6 +573,16 @@ exports.ctrl = function (mess, func) {
                 func(ansver);
             });
 
+        });
+      }else if (mess.ctrl == 'del') {
+        var sql = "DELETE FROM contract WHERE id = "+mess.contract;
+        connection.query(sql, function(err, rows, fields){
+            if(err) return console.log(err);
+                var ansver = {
+                  status : "ok",
+                  ansver : rows
+                };
+                func(ansver);
         });
       }
 
@@ -530,6 +598,42 @@ exports.ctrl = function (mess, func) {
               ansver : rows
             };
             func(ansver);
+        });
+      }else if (mess.ctrl == 'edit') {
+        var sql = "DELETE FROM akts WHERE id = "+mess.akt;
+        connection.query(sql, function(err, rows, fields){
+            if(err) return console.log(err);
+            var sql = "INSERT INTO akts SET `date` = '"+mess.date+"',  emp = "+mess.emp;
+            sql += ", degree = "+mess.degree+", `group` = "+mess.groups+", `item` = "+mess.items;
+            sql += ", contract = "+mess.contracts+", `type` = "+mess.type_work+", `time` = "+mess.time;
+            connection.query(sql, function(err, rows, fields){
+                if(err) return console.log(err);
+                var ansver = {
+                  status : "ok",
+                  ansver : rows
+                };
+                func(ansver);
+            });
+        });
+      }else if (mess.ctrl == 'del') {
+        var sql = "DELETE FROM akts WHERE id = "+mess.akt;
+        connection.query(sql, function(err, rows, fields){
+            if(err) return console.log(err);
+                var ansver = {
+                  status : "ok",
+                  ansver : rows
+                };
+                func(ansver);
+        });
+      }else if (mess.ctrl == 'del_c') {
+        var sql = "DELETE FROM contract WHERE id = "+mess.akt;
+        connection.query(sql, function(err, rows, fields){
+            if(err) return console.log(err);
+                var ansver = {
+                  status : "ok",
+                  ansver : rows
+                };
+                func(ansver);
         });
       }else if (mess.ctrl == 'get') {
         var sql = "SELECT * FROM akts WHERE id = "+mess.id;
@@ -600,7 +704,7 @@ exports.ctrl = function (mess, func) {
 
       }else if (mess.ctrl == 'file') {
 
-          var rand = Math.floor(Math.random() * (9999 - 1000 + 1)) + 1000;
+          var rand = Math.floor(Math.random() * (99999 - 10000 + 1)) + 10000;
 
 
         fs.writeFile("client/uploads/f"+rand+".docx", ' '+mess.text, function(err) {
