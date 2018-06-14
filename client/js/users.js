@@ -131,18 +131,12 @@ $(document).ready(function () {
                         });
                         str += '          </tbody>';
                         str += '        </table>';
-<<<<<<< HEAD
-                        str += '<div style="display:none" onclick="print_akt('+this.id+')" class="btn btn-info print">Печать трудового договора</div>';
-                        str += '<div style="display:none" onclick="remove_contract('+this.id+')" class="btn btn-danger print">Удалить трудовой договор</div>';
-                        str += '<div style="display:none" onclick="print_contract('+this.id+')" class="btn btn-info print">Печать списка акта работ</div>';
-                        str += '<a style="display:none; padding: 7px 15px;" href="/upload/contract'+this.id+'.docx" download class="btn btn-danger print">Скачать .DOCX</a>';
-=======
+
                         str += '<div style="display:none" onclick="print_contract('+this.id+')" class="btn btn-info print">Печать трудового догавора</div>';
                         str += '<div style="display:none" onclick="remove_contract('+this.id+', this)" class="btn btn-danger print">Удалить трудовой договор</div>';
                         str += '<div style="display:none" onclick="print_akt('+this.id+')" class="btn btn-info print">Печать списка акта работ</div>';
                         str += '<div style="display:none" onclick="save_akt('+this.id+', this)" class="btn btn-danger print">Создать .DOCX</a>';
                         // str += '<a style="display:none; padding: 7px 15px;" href="/upload/contract'+this.id+'.docx" download class="btn btn-danger print">Скачать .DOCX</a>';
->>>>>>> e735c7e068b1a1d08411820d1d0978e2b2d03e07
                         str += '      </li>';
                         str += '<br>';
                       }
