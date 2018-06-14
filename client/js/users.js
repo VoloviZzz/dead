@@ -130,7 +130,7 @@ $(document).ready(function () {
                         });
                         str += '          </tbody>';
                         str += '        </table>';
-                        str += '<div style="display:none" onclick="print_akt('+this.id+')" class="btn btn-info print">Печать трудового догавора</div>';
+                        str += '<div style="display:none" onclick="print_akt('+this.id+')" class="btn btn-info print">Печать трудового договора</div>';
                         str += '<div style="display:none" onclick="remove_contract('+this.id+')" class="btn btn-danger print">Удалить трудовой договор</div>';
                         str += '<div style="display:none" onclick="print_contract('+this.id+')" class="btn btn-info print">Печать списка акта работ</div>';
                         str += '<a style="display:none; padding: 7px 15px;" href="/upload/contract'+this.id+'.docx" download class="btn btn-danger print">Скачать .DOCX</a>';
